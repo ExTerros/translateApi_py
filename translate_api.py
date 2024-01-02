@@ -11,6 +11,8 @@ MY_IP = os.getenv('MY_IP')
 TOKEN_PLAYER = os.getenv('TOKEN_PLAYER')
 TOKEN_DEV = os.getenv('TOKEN_DEV')
 
+print(TOKEN_PLAYER)
+
 app = Flask(__name__)
 translator = Translator()
 
@@ -53,11 +55,16 @@ def translate_text():
         log_info = f"Erreur: 'Invalid API key'"
         logging.info(log_info)
 
+        print("Erreur: 'Invalid API key'")
+
+
         return jsonify({'error': 'Invalid API key'}), 401
 
     if text_to_translate is None or destination_lang is None:
         log_info = f"Erreur: 'Missing parameters'"
         logging.info(log_info)
+
+        print("Erreur: 'Missing parameters'")
 
         return jsonify({'error': 'Missing parameters'}), 400
 
@@ -69,6 +76,8 @@ def translate_text():
         translated_text = translator.translate(text_to_translate, dest=destination_lang)
         log_info = f"Entrée: {text_to_translate}, Lang_Sortie: {translated_text.dest}, Lang_Source: {translated_text.src}, Sortie: {translated_text.text}"
         logging.info(log_info)
+
+    print(f"Entrée: {text_to_translate}, Lang_Sortie: {translated_text.dest}, Lang_Source: {translated_text.src}, Sortie: {translated_text.text}")
 
     return jsonify({'translation': translated_text.text, 'src': translated_text.src, 'dest': translated_text.dest}), 200 
 
