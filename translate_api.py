@@ -58,7 +58,7 @@ def translate_text():
         print("Erreur: 'Invalid API key'")
 
 
-        return jsonify({'error': 'Invalid API key'}), 401
+        return jsonify({'error': 'Invalid API key'}), 200
 
     if text_to_translate is None or destination_lang is None:
         log_info = f"Erreur: 'Missing parameters'"
@@ -66,7 +66,7 @@ def translate_text():
 
         print("Erreur: 'Missing parameters'")
 
-        return jsonify({'error': 'Missing parameters'}), 400
+        return jsonify({'error': 'Missing parameters'}), 200
 
     if source_lang is not None:
         translated_text = translator.translate(text_to_translate, src=source_lang, dest=destination_lang)
