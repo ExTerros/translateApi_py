@@ -4,6 +4,7 @@ import logging
 import datetime
 import os
 from dotenv import load_dotenv
+import re
 
 load_dotenv()
 
@@ -11,7 +12,8 @@ MY_IP = os.getenv('MY_IP')
 TOKEN_PLAYER = os.getenv('TOKEN_PLAYER')
 TOKEN_DEV = os.getenv('TOKEN_DEV')
 
-print(TOKEN_PLAYER)
+def add_space_after_punctuation(text):
+    return re.sub(r'([?.])(?!\s|$)', r'\1 ', text)
 
 app = Flask(__name__)
 translator = Translator()
@@ -74,12 +76,12 @@ def translate_text():
         logging.info(log_info)
     else:
         translated_text = translator.translate(text_to_translate, dest=destination_lang)
-        log_info = f"Entrée: {text_to_translate}, Lang_Sortie: {translated_text.dest}, Lang_Source: {translated_text.src}, Sortie: {translated_text.text.replace('?', '? ').replace('.', '. ')}"
+        log_info = f"Entrée: {text_to_translate}, Lang_Sortie: {translated_text.dest}, Lang_Source: {translated_text.src}, Sortie: {add_space_after_punctuation(translated_text.text)}"
         logging.info(log_info)
 
-    print(f"Entrée: {text_to_translate}, Lang_Sortie: {translated_text.dest}, Lang_Source: {translated_text.src}, Sortie: {translated_text.text.replace('?', '? ').replace('.', '. ')}")
+    print(f"Entrée: {text_to_translate}, Lang_Sortie: {translated_text.dest}, Lang_Source: {translated_text.src}, Sortie: {add_space_after_punctuation(translated_text.text)}")
 
-    return jsonify({'translation': translated_text.text.replace('?', '? ').replace('.', '. '), 'src': translated_text.src, 'dest': translated_text.dest}), 200 
+    return jsonify({'translation': add_space_after_punctuation(translated_text.text), 'src': translated_text.src, 'dest': translated_text.dest}), 200 
 
 if __name__ == '__main__':
     app.run(host=MY_IP, port=3000)
