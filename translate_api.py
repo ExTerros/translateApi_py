@@ -22,8 +22,12 @@ if not os.path.exists(log_directory):
 current_datetime = datetime.datetime.now()
 log_filename = f"{log_directory}/app_{current_datetime.strftime('%Y-%m-%d_%H-%M-%S')}.log"
 
-# Configuration de la journalisation avec le chemin complet du fichier
-logging.basicConfig(filename=log_filename, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', encoding='utf-8')
+# Ouvrir le fichier de log avec un encodage spécifié
+with open(log_filename, 'a', encoding='utf-8') as f:
+    pass  # Permet juste de créer le fichier s'il n'existe pas encore
+
+# Configuration du logging en utilisant le fichier de log ouvert précédemment
+logging.basicConfig(filename=log_filename, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def validate_api_key(key):
     return api_keys.get(key, False)
