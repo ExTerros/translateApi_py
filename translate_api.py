@@ -74,10 +74,10 @@ def translate_text():
         logging.info(log_info)
     else:
         translated_text = translator.translate(text_to_translate, dest=destination_lang)
-        log_info = f"Entrée: {text_to_translate}, Lang_Sortie: {translated_text.dest}, Lang_Source: {translated_text.src}, Sortie: {translated_text.text}"
+        log_info = f"Entrée: {text_to_translate}, Lang_Sortie: {translated_text.dest}, Lang_Source: {translated_text.src}, Sortie: {translated_text.text.replace('?', '? ').replace('.', '. ')}"
         logging.info(log_info)
 
-    print(f"Entrée: {text_to_translate}, Lang_Sortie: {translated_text.dest}, Lang_Source: {translated_text.src}, Sortie: {translated_text.text}")
+    print(f"Entrée: {text_to_translate}, Lang_Sortie: {translated_text.dest}, Lang_Source: {translated_text.src}, Sortie: {translated_text.text.replace('?', '? ').replace('.', '. ')}")
 
     return jsonify({'translation': translated_text.text, 'src': translated_text.src, 'dest': translated_text.dest}), 200 
 
