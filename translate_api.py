@@ -3,14 +3,21 @@ from googletrans import Translator
 import logging
 import datetime
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+MY_IP = os.getenv('MY_IP')
+TOKEN_PLAYER = os.getenv('TOKEN_PLAYER')
+TOKEN_DEV = os.getenv('TOKEN_DEV')
 
 app = Flask(__name__)
 translator = Translator()
 
 # Dictionnaire de clés API autorisées
 api_keys = {
-    "HJ3dy&GMiK^h6ii": True,  # Dev Key
-    "VFu%ntZ9WK7K%79": True  # Session test key
+    TOKEN_DEV: True,  # Dev Key
+    TOKEN_PLAYER: True  # Session test key
 }
 
 # Créer le répertoire de logs s'il n'existe pas
@@ -66,4 +73,4 @@ def translate_text():
     return jsonify({'translation': translated_text.text, 'src': translated_text.src, 'dest': translated_text.dest}), 200 
 
 if __name__ == '__main__':
-    app.run(host='192.168.1.18', port=3000)
+    app.run(host=MY_IP, port=3000)
