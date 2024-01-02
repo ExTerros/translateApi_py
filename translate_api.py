@@ -79,7 +79,7 @@ def translate_text():
 
     print(f"Entrée: {text_to_translate}, Lang_Sortie: {translated_text.dest}, Lang_Source: {translated_text.src}, Sortie: {translated_text.text.replace('?', '? ').replace('.', '. ')}")
 
-    return jsonify({'translation': translated_text.text, 'src': translated_text.src, 'dest': translated_text.dest}), 200 
+    return jsonify({'translation': translated_text.text.replace('?', '? ').replace('.', '. '), 'src': translated_text.src, 'dest': translated_text.dest}), 200 
 
 if __name__ == '__main__':
     app.run(host=MY_IP, port=3000)
