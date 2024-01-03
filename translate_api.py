@@ -11,6 +11,7 @@ load_dotenv()
 MY_IP = os.getenv('MY_IP')
 TOKEN_PLAYER = os.getenv('TOKEN_PLAYER')
 TOKEN_DEV = os.getenv('TOKEN_DEV')
+MOD_VERSION = os.getenv('MOD_VERSION')
 
 def add_space_after_punctuation(text):
     return re.sub(r'([?.])(?!\s|$)', r'\1 ', text)
@@ -49,16 +50,26 @@ def translate_text():
     text_to_translate = request.args.get('q')
     destination_lang = request.args.get('dest')
     source_lang = request.args.get('src')
+    client_version = request.args.get('v')
 
     log_info = f"-----------------------------------------------------------------------------------"
     logging.info(log_info)
+
+    if client_version != MOD_VERSION:
+        log_info = f"Update: 'The mod have a new update'"
+        logging.info(log_info)
+
+        print("Update: 'The mod have a new update'")
+
+        return jsonify({'update': 'The mod have a new update'})
+    
+    
 
     if api_key is None or not validate_api_key(api_key):
         log_info = f"Erreur: 'Invalid API key'"
         logging.info(log_info)
 
         print("Erreur: 'Invalid API key'")
-
 
         return jsonify({'error': 'Invalid API key'}), 200
 
