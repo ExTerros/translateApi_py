@@ -86,7 +86,7 @@ def translate_text():
 
 
 @app.route('/get_mod_forge_version', methods=['GET'])
-def mod_api_verson():
+def mod_forge_version():
     client_version = request.args.get('v')
 
     log_info = f"-----------------------------------------------------------------------------------"
@@ -108,8 +108,9 @@ def mod_api_verson():
 
         return jsonify({'update': 'The mod is up to date'})
     
+    
 @app.route('/get_mod_fabric_version', methods=['GET'])
-def mod_api_verson():
+def mod_fabric_version():
     client_version = request.args.get('v')
 
     log_info = f"-----------------------------------------------------------------------------------"
