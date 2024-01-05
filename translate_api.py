@@ -50,20 +50,9 @@ def translate_text():
     text_to_translate = request.args.get('q')
     destination_lang = request.args.get('dest')
     source_lang = request.args.get('src')
-    client_version = request.args.get('v')
 
     log_info = f"-----------------------------------------------------------------------------------"
-    logging.info(log_info)
-
-    if client_version != MOD_VERSION:
-        log_info = f"Update: 'The mod have a new update'"
-        logging.info(log_info)
-
-        print("Update: 'The mod have a new update'")
-
-        return jsonify({'update': 'The mod have a new update'})
-    
-    
+    logging.info(log_info)  
 
     if api_key is None or not validate_api_key(api_key):
         log_info = f"Erreur: 'Invalid API key'"
@@ -94,5 +83,29 @@ def translate_text():
 
     return jsonify({'translation': add_space_after_punctuation(translated_text.text), 'src': translated_text.src, 'dest': translated_text.dest}), 200 
 
+
+@app.route('/get_mod_version', methods=['GET'])
+def mod_api_verson():
+    client_version = request.args.get('v')
+
+    log_info = f"-----------------------------------------------------------------------------------"
+    logging.info(log_info)
+
+    if client_version != MOD_VERSION:
+        log_info = f"Update: 'The mod have a new update'"
+        logging.info(log_info)
+
+        print("Update: 'The mod have a new update'")
+
+        return jsonify({'update': 'The mod have a new update'})
+    
+    if client_version == MOD_VERSION:
+        log_info = f"Update: 'The mod is up to date'"
+        logging.info(log_info)
+
+        print("Update: 'The mod is up to date'")
+
+        return jsonify({'update': 'The mod is up to date'})
+    
 if __name__ == '__main__':
     app.run(host=MY_IP, port=3000)
