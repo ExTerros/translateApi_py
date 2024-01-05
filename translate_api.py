@@ -11,7 +11,8 @@ load_dotenv()
 MY_IP = os.getenv('MY_IP')
 TOKEN_PLAYER = os.getenv('TOKEN_PLAYER')
 TOKEN_DEV = os.getenv('TOKEN_DEV')
-MOD_VERSION = os.getenv('MOD_VERSION')
+MOD_VERSION_FORGE = os.getenv('MOD_VERSION_FORGE')
+MOD_VERSION_FABRIC = os.getenv('MOD_VERSION_FABRIC')
 
 def add_space_after_punctuation(text):
     return re.sub(r'([?.])(?!\s|$)', r'\1 ', text)
@@ -84,14 +85,14 @@ def translate_text():
     return jsonify({'translation': add_space_after_punctuation(translated_text.text), 'src': translated_text.src, 'dest': translated_text.dest}), 200 
 
 
-@app.route('/get_mod_version', methods=['GET'])
+@app.route('/get_mod_forge_version', methods=['GET'])
 def mod_api_verson():
     client_version = request.args.get('v')
 
     log_info = f"-----------------------------------------------------------------------------------"
     logging.info(log_info)
 
-    if client_version != MOD_VERSION:
+    if client_version != MOD_VERSION_FORGE:
         log_info = f"Update: 'The mod have a new update'"
         logging.info(log_info)
 
@@ -99,7 +100,30 @@ def mod_api_verson():
 
         return jsonify({'update': 'The mod have a new update'})
     
-    if client_version == MOD_VERSION:
+    if client_version == MOD_VERSION_FORGE:
+        log_info = f"Update: 'The mod is up to date'"
+        logging.info(log_info)
+
+        print("Update: 'The mod is up to date'")
+
+        return jsonify({'update': 'The mod is up to date'})
+    
+@app.route('/get_mod_fabric_version', methods=['GET'])
+def mod_api_verson():
+    client_version = request.args.get('v')
+
+    log_info = f"-----------------------------------------------------------------------------------"
+    logging.info(log_info)
+
+    if client_version != MOD_VERSION_FABRIC:
+        log_info = f"Update: 'The mod have a new update'"
+        logging.info(log_info)
+
+        print("Update: 'The mod have a new update'")
+
+        return jsonify({'update': 'The mod have a new update'})
+    
+    if client_version == MOD_VERSION_FABRIC:
         log_info = f"Update: 'The mod is up to date'"
         logging.info(log_info)
 
