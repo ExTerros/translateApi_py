@@ -50,7 +50,11 @@ def translate_text():
     api_key = request.args.get('key')
     text_to_translate = request.args.get('q')
     destination_lang = request.args.get('dest')
+
     source_lang = request.args.get('src')
+
+    if source_lang == "auto":
+        source_lang = None
 
     log_info = f"-----------------------------------------------------------------------------------"
     logging.info(log_info)  
@@ -93,20 +97,20 @@ def mod_forge_version():
     logging.info(log_info)
 
     if client_version != MOD_VERSION_FORGE:
-        log_info = f"Update: 'The mod have a new update'"
+        log_info = f"Update: 'False'"
         logging.info(log_info)
 
-        print("Update: 'The mod have a new update'")
+        print("Update: 'False'")
 
-        return jsonify({'update': 'The mod have a new update'})
+        return jsonify({'update': False})
     
     if client_version == MOD_VERSION_FORGE:
-        log_info = f"Update: 'The mod is up to date'"
+        log_info = f"Update: 'True'"
         logging.info(log_info)
 
-        print("Update: 'The mod is up to date'")
+        print("Update: 'True'")
 
-        return jsonify({'update': 'The mod is up to date'})
+        return jsonify({'update': True })
     
     
 @app.route('/get_mod_fabric_version', methods=['GET'])
@@ -117,20 +121,33 @@ def mod_fabric_version():
     logging.info(log_info)
 
     if client_version != MOD_VERSION_FABRIC:
-        log_info = f"Update: 'The mod have a new update'"
+        log_info = f"Update: 'False'"
         logging.info(log_info)
 
-        print("Update: 'The mod have a new update'")
+        print("Update: 'False'")
 
-        return jsonify({'update': 'The mod have a new update'})
+        return jsonify({'update': False})
     
     if client_version == MOD_VERSION_FABRIC:
-        log_info = f"Update: 'The mod is up to date'"
+        log_info = f"Update: 'True'"
         logging.info(log_info)
 
-        print("Update: 'The mod is up to date'")
+        print("Update: 'True'")
 
-        return jsonify({'update': 'The mod is up to date'})
+        return jsonify({'update': True})
+    
+@app.route('/get_language', methods=['GET'])
+def get_languages_available():
+
+    log_info = f"-----------------------------------------------------------------------------------"
+    logging.info(log_info)
+
+    log_info = f"Info: 'fr, en, es, pt'"
+    logging.info(log_info)
+
+    print("Info: 'fr, en, es, pt'")
+
+    return jsonify({'Info': 'fr, en, es, pt'})
     
 if __name__ == '__main__':
     app.run(host=MY_IP, port=3000)
