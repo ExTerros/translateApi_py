@@ -15,7 +15,7 @@ mycursor.execute("CREATE DATABASE IF NOT EXISTS universaltranslatedb")
 mycursor.execute("USE universaltranslatedb")
 
 mycursor.execute("""
-CREATE TABLE IF NOT EXISTS API_Gestion_Key (
+CREATE TABLE IF NOT EXISTS api_gestion_key (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) NOT NULL,
     discord_id VARCHAR(50) NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS API_Gestion_Key (
 """)
 
 mycursor.execute("""
-CREATE TABLE IF NOT EXISTS API_request (
+CREATE TABLE IF NOT EXISTS api_request (
     id INT AUTO_INCREMENT PRIMARY KEY,
     uuid VARCHAR(255) NOT NULL,
     api_key VARCHAR(100) NOT NULL,
