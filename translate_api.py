@@ -180,7 +180,7 @@ def add_api_request(uuid, api_key, serveur, date_used, message, input_language, 
         cursor = db.cursor()
 
         query = """
-        INSERT INTO API_request (uuid, api_key, serveur, date_used, message, input_language, output_language)
+        INSERT INTO api_request (uuid, api_key, serveur, date_used, message, input_language, output_language)
         VALUES (%s, %s, %s, %s, %s, %s, %s)
         """
         cursor.execute(query, (uuid, api_key, serveur, date_used, message, input_language, output_language))
