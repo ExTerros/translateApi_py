@@ -239,20 +239,23 @@ def translate_text():
     if source_lang == "auto":
         source_lang = None
 
-    if source_lang is not None:
-        translated_text = translator.translate(text_to_translate, src=source_lang, dest=destination_lang)
-        log_info = f"Entrée: {text_to_translate}, Lang_Sortie: {translated_text.dest}, Lang_Source: {translated_text.src}, Sortie: {translated_text.text}"
-        logging.info(log_info)
-    else:
-        translated_text = translator.translate(text_to_translate, dest=destination_lang)
-        log_info = f"Entrée: {text_to_translate}, Lang_Sortie: {translated_text.dest}, Lang_Source: {translated_text.src}, Sortie: {add_space_after_punctuation(translated_text.text)}"
-        logging.info(log_info)
+    try:
+        if source_lang is not None:
+            translated_text = translator.translate(text_to_translate, src=source_lang, dest=destination_lang)
+            log_info = f"Entrée: {text_to_translate}, Lang_Sortie: {translated_text.dest}, Lang_Source: {translated_text.src}, Sortie: {translated_text.text}"
+            logging.info(log_info)
+        else:
+            translated_text = translator.translate(text_to_translate, dest=destination_lang)
+            log_info = f"Entrée: {text_to_translate}, Lang_Sortie: {translated_text.dest}, Lang_Source: {translated_text.src}, Sortie: {add_space_after_punctuation(translated_text.text)}"
+            logging.info(log_info)
 
-    add_api_request(uuid, api_key, server_ip, datetime.datetime.now(), text_to_translate, source_lang, destination_lang)
+        print(f"Entrée: {text_to_translate}, Lang_Sortie: {translated_text.dest}, Lang_Source: {translated_text.src}, Sortie: {add_space_after_punctuation(translated_text.text)}")
 
-    print(f"Entrée: {text_to_translate}, Lang_Sortie: {translated_text.dest}, Lang_Source: {translated_text.src}, Sortie: {add_space_after_punctuation(translated_text.text)}")
+        return jsonify({'translation': add_space_after_punctuation(translated_text.text), 'src': translated_text.src, 'dest': translated_text.dest}), 200
 
-    return jsonify({'translation': add_space_after_punctuation(translated_text.text), 'src': translated_text.src, 'dest': translated_text.dest}), 200 
+    finally:
+        add_api_request(uuid, api_key, server_ip, datetime.datetime.now(), text_to_translate, source_lang, destination_lang)
+
 
 @app.route('/check_api_key', methods=['GET'])
 def check_token():
